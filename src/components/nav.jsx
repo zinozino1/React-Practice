@@ -2,14 +2,19 @@ import React, { Component } from "react";
 
 class Nav extends Component {
     render() {
+        const lists = [];
+        const data = this.props.data;
+        for (let i = 0; i < data.length; i++) {
+            lists.push(
+                <li key={data[i].id}>
+                    <a href={"/content/" + data[i].id}>{data[i].title}</a>
+                </li>,
+            );
+        }
         return (
-            <ul id={this.props.id}>
-                <li>1</li>
-                <li>2</li>
-                <li>3</li>
-                <li>4</li>
-                <li>5</li>
-            </ul>
+            <nav>
+                <ul>{lists}</ul>
+            </nav>
         );
     }
 }
