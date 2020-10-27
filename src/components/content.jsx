@@ -2,19 +2,12 @@ import React, { Component } from "react";
 
 class Content extends Component {
     render() {
-        const lists = [];
-        const data = this.props.data;
-        for (let i = 0; i < data.length; i++) {
-            lists.push(
-                <li key={data[i].id}>
-                    <a href={"/content/" + data[i].id}>{data[i].title}</a>
-                </li>,
-            );
-        }
+        console.log("Conetent render");
         return (
-            <nav>
-                <ul>{lists}</ul>
-            </nav>
+            <article>
+                <div>{this.props.title}</div>
+                <div>{this.props.desc}</div>
+            </article>
         );
     }
 }
