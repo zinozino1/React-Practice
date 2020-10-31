@@ -4,7 +4,8 @@ import "./App.css";
 import { Component } from "react";
 import Subject from "./components/subject";
 import Nav from "./components/nav";
-import Content from "./components/content";
+import ReadContent from "./components/readContent";
+import CreateContent from "./components/createContent";
 import Controll from "./components/controll";
 
 class App extends Component {
@@ -27,10 +28,12 @@ class App extends Component {
         console.log("App render");
         console.log(this);
         let _title,
-            _desc = "";
+            _desc,
+            _article = null;
         if (this.state.mode === "welcome") {
             _title = this.state.welcome.title;
             _desc = this.state.welcome.desc;
+            _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
         } else if (this.state.mode === "read") {
             this.state.contents.forEach(
                 function (v) {
@@ -40,8 +43,17 @@ class App extends Component {
                     }
                 }.bind(this),
             );
-            // _title = this.state.contents[0].title;
-            // _desc = this.state.contents[0].desc;
+            _article = <ReadContent title={_title} desc={_desc}></ReadContent>;
+        } else if (this.state.mode === "create") {
+            _article = (
+                <CreateContent
+                    title={_title}
+                    desc={_desc}
+                    onSubmit={() => {
+                        this.setState();
+                    }}
+                ></CreateContent>
+            );
         }
         return (
             <div className="App">
@@ -67,7 +79,8 @@ class App extends Component {
                         this.setState({ mode: mode });
                     }}
                 ></Controll>
-                <Content title={_title} desc={_desc}></Content>
+
+                {_article}
             </div>
         );
     }
