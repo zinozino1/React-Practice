@@ -8,7 +8,15 @@ class Nav extends Component {
         for (let i = 0; i < data.length; i++) {
             lists.push(
                 <li key={data[i].id}>
-                    <a href={"/content/" + data[i].id}>{data[i].title}</a>
+                    <a
+                        href={"/content/" + data[i].id}
+                        onClick={(e) => {
+                            e.preventDefault();
+                            this.props.onChangePage(data[i]);
+                        }}
+                    >
+                        {data[i].title}
+                    </a>
                 </li>,
             );
         }
