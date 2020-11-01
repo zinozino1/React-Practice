@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
 class Nav extends Component {
+    shouldComponentUpdate(newProps, newState) {
+        console.log("nav should render");
+        return newProps.data !== this.props.data;
+    }
     render() {
         console.log("nav render");
         const lists = [];

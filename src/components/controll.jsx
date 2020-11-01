@@ -1,6 +1,10 @@
 import React, { Component } from "react";
 
 class Controll extends Component {
+    shouldComponentUpdate(newProps, newState) {
+        console.log("controll shoud renderr");
+        return newProps.data !== this.props.state;
+    }
     render() {
         console.log("Controll Render");
         return (
@@ -30,7 +34,7 @@ class Controll extends Component {
                 <li>
                     <input
                         type="button"
-                        value="button"
+                        value="Delete"
                         onClick={() => {
                             this.props.onChangeMode("delete");
                         }}

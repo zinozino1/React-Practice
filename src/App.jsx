@@ -6,28 +6,41 @@ import Subject from "./components/subject";
 import Nav from "./components/nav";
 import ReadContent from "./components/readContent";
 import CreateContent from "./components/createContent";
+import UpdateContent from "./components/updateContent";
+import DeleteContent from "./components/deleteContent";
 import Controll from "./components/controll";
 
 class App extends Component {
     constructor(props) {
         super(props);
-        this.max_content_id = 3; // state에 넣지 않는다. 불필요한 렌더링 방지
+        this.max_content_id = 3; // state에 넣지 않는다. 불필요한
         this.state = {
             mode: "welcome",
-            selected_content_id: 0,
+            selected_content_id: 1,
             welcome: { title: "welcome", desc: "hello react" },
-            subject: { title: "WEB SUB1", desc: "FUcking s" }, // Subject에 보낼 state
+            subject: { title: "WEB SUB1", desc: "HELLO " }, // Subject에 보낼 state
             contents: [
                 // Content에 보낼 state
                 { id: 1, title: "HTML", desc: "HTML is hyper...." },
-                { id: 2, title: "CSS", desc: "CSS is hyper...." },
-                { id: 3, title: "JS", desc: "JS is hyper...." },
+                { id: 2, title: "CSS", desc: "CSS is cascading...." },
+                { id: 3, title: "JS", desc: "JS is javascript...." },
             ],
         };
+        this.getcontent = this.getcontent.bind(this);
     }
-    render() {
+    getReadContent() {
+        let i = 0;
+        while (i < this.state.contents.length) {
+            let data = this.state.contents[i];
+            if (data.id === this.state.selected_content_id) {
+                return data;
+            }
+            i = i + 1;
+        }
+    }
+    getcontent() {
         console.log("App render");
-        console.log(this);
+
         let _title,
             _desc,
             _article = null;
@@ -58,7 +71,29 @@ class App extends Component {
                     }}
                 ></CreateContent>
             );
+        } else if (this.state.mode === "update") {
+            let _content = this.getReadContent();
+            _article = (
+                <UpdateContent
+                    data={_content}
+                    onSubmit={(title, desc) => {
+                        let copiedArr = Array.from(this.state.contents);
+                        copiedArr[
+                            this.state.selected_content_id - 1
+                        ].title = title;
+                        copiedArr[
+                            this.state.selected_content_id - 1
+                        ].desc = desc;
+                        this.setState({ contents: copiedArr, mode: "read" });
+                    }}
+                ></UpdateContent>
+            );
+        } else if (this.state.mode === "delete") {
+            _article = <DeleteContent></DeleteContent>;
         }
+        return _article;
+    }
+    render() {
         return (
             <div className="App">
                 <Subject
@@ -84,7 +119,7 @@ class App extends Component {
                     }}
                 ></Controll>
 
-                {_article}
+                {this.getcontent()}
             </div>
         );
     }
