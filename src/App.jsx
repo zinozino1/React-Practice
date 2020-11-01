@@ -11,6 +11,7 @@ import Controll from "./components/controll";
 class App extends Component {
     constructor(props) {
         super(props);
+        this.max_content_id = 3; // state에 넣지 않는다. 불필요한 렌더링 방지
         this.state = {
             mode: "welcome",
             selected_content_id: 0,
@@ -49,8 +50,11 @@ class App extends Component {
                 <CreateContent
                     title={_title}
                     desc={_desc}
-                    onSubmit={() => {
-                        this.setState();
+                    onSubmit={(title, desc) => {
+                        this.max_content_id += 1;
+                        const newObj = { id: this.max_content_id, title, desc };
+                        const newArr = this.state.contents.concat(newObj); // 여기까지는 state가 바뀐것을 브라우저가 모른다.
+                        this.setState({ contents: newArr }); // 여기부터 앎
                     }}
                 ></CreateContent>
             );
