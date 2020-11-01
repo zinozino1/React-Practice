@@ -7,7 +7,6 @@ import Nav from "./components/nav";
 import ReadContent from "./components/readContent";
 import CreateContent from "./components/createContent";
 import UpdateContent from "./components/updateContent";
-import DeleteContent from "./components/deleteContent";
 import Controll from "./components/controll";
 
 class App extends Component {
@@ -88,8 +87,6 @@ class App extends Component {
                     }}
                 ></UpdateContent>
             );
-        } else if (this.state.mode === "delete") {
-            _article = <DeleteContent></DeleteContent>;
         }
         return _article;
     }
@@ -116,6 +113,19 @@ class App extends Component {
                 <Controll
                     onChangeMode={(mode) => {
                         this.setState({ mode: mode });
+                    }}
+                    onDelete={() => {
+                        this.max_content_id -= 1;
+                        let newArr = this.state.contents.filter((v) => {
+                            return v.id !== this.state.selected_content_id;
+                        });
+                        this.setState({ contents: newArr, mode: "welcome" });
+                        // let copiedArr = Array.from(this.state.contents);
+                        // let spliceArr = copiedArr.splice(
+                        //     this.state.selected_content_id - 1,
+                        //     1,
+                        // );
+                        // this.setState({ contents: spliceArr });
                     }}
                 ></Controll>
 

@@ -36,7 +36,7 @@ class Controll extends Component {
                         type="button"
                         value="Delete"
                         onClick={() => {
-                            this.props.onChangeMode("delete");
+                            this.props.onDelete();
                         }}
                     />
                 </li>
